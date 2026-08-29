@@ -10,7 +10,7 @@ type Service struct {
 	Model *models.SavedURL
 }
 
-func (s *Service) GenerateURL(url string) models.SavedURL {
+func (s *Service) GenerateURL(url string) string {
 	const newURLLength = 6 // length of a new url
 	var newURL strings.Builder
 	newURL.Grow(newURLLength) // optimize for memory
@@ -20,10 +20,8 @@ func (s *Service) GenerateURL(url string) models.SavedURL {
 		randomIndex := rand.IntN(len(url))
 		newURL.WriteByte(url[randomIndex])
 	}
-	// put a new map into a struct
-	m := make(map[string]string)
-	m[newURL.String()] = url
-	return models.SavedURL{
-		Urls: m,
-	}
+	// write the short url to the existing map
+	shortCode := newURL.String()
+	s.Model.Urls[shortCode] = url
+	return shortCode
 }

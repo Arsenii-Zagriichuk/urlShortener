@@ -10,7 +10,7 @@ import (
 
 func main() {
 	r := gin.Default()
-	model := &models.SavedURL{}
+	model := &models.SavedURL{Urls: make(map[string]string)}
 	service := &services.Service{Model: model}
 	handler := &handlers.URLHandler{Service: service}
 	r.POST("/shorten", handler.GenerateURL)
