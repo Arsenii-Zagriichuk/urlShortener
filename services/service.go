@@ -12,13 +12,15 @@ type Service struct {
 
 func (s *Service) GenerateURL(url string) string {
 	const newURLLength = 6 // length of a new url
+	// define allowed chars for the new url
+	const allowedChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
 	var newURL strings.Builder
 	newURL.Grow(newURLLength) // optimize for memory
 
-	// populate the new url
+	// populate the new url picking a random char from the allowedChars
 	for range newURLLength {
-		randomIndex := rand.IntN(len(url))
-		newURL.WriteByte(url[randomIndex])
+		randomIndex := rand.IntN(len(allowedChars))
+		newURL.WriteByte(allowedChars[randomIndex])
 	}
 	// write the short url to the existing map
 	shortCode := newURL.String()
