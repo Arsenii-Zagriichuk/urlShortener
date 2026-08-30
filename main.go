@@ -14,4 +14,9 @@ func main() {
 	service := &services.Service{Model: model}
 	handler := &handlers.URLHandler{Service: service}
 	r.POST("/shorten", handler.GenerateURL)
+	r.GET("/:code", handler.GetOGUrl)
+	err := r.Run(":8080")
+	if err != nil {
+		return
+	}
 }

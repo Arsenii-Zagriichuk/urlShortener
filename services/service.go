@@ -27,3 +27,11 @@ func (s *Service) GenerateURL(url string) string {
 	s.Model.Urls[shortCode] = url
 	return shortCode
 }
+
+func (s *Service) GetOGUrl(newUrl string) (string, bool) {
+	url, ok := s.Model.Urls[newUrl]
+	if ok {
+		return url, true
+	}
+	return "error has occurred", false
+}

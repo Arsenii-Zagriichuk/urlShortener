@@ -26,3 +26,20 @@ func (h *URLHandler) GenerateURL(c *gin.Context) {
 
 	c.JSON(http.StatusOK, result)
 }
+
+// GetOGUrl get request handler
+func (h *URLHandler) GetOGUrl(c *gin.Context) {
+
+	shortCode := c.Param("code")
+
+	originalURL, exists := h.Service.GetOGUrl(shortCode)
+
+	if !exists {
+		c.JSON(http.StatusNotFound, gin.H{"error": "short link not found"})
+		return
+	}
+
+	// 3. Issue the redirect to the target website
+	c.Redirect(http.StatusFound, originalURL)
+
+}
